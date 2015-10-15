@@ -16,20 +16,15 @@ feature "User can sign in and out" do
 
   context "user signed in on the homepage" do
     before do
-      visit('/')
-      click_link('Sign up')
-      fill_in('Email', with: 'test@example.com')
-      fill_in('Password', with: 'testtest')
-      fill_in('Password confirmation', with: 'testtest')
-      click_button('Sign up')
+      sign_up
     end
 
-    it "should see 'sign out' link" do
+    scenario "should see 'sign out' link" do
       visit('/')
       expect(page).to have_link('Sign out')
     end
 
-    it "should not see a 'sign in' link and a 'sign up' link" do
+    scenario "should not see a 'sign in' link and a 'sign up' link" do
       visit('/')
       expect(page).not_to have_link('Sign in')
       expect(page).not_to have_link('Sign up')
@@ -38,12 +33,10 @@ feature "User can sign in and out" do
 end
 
 feature 'Users can only review a restaurant once' do
+
   scenario 'it does not allow the user to add another review to the same restaurant' do
-    user = FactoryGirl.create(:user)
-    visit '/users/sign_in'
-    fill_in 'Email', with: 'test@email.com'
-    fill_in 'Password', with: 'password'
-    click_button 'Log in'
+    user = create(:user)
+    sign_in(user)
 
     click_link 'Add a restaurant'
     fill_in 'Name', with: 'KFC'

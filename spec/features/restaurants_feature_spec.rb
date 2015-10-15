@@ -19,7 +19,6 @@ feature 'restaurants' do
   end
 
   context 'restaurants have been added' do
-
     scenario 'display restaurants' do
       @user.restaurants.create name: 'KFC'
       visit '/restaurants'
@@ -40,7 +39,6 @@ feature 'restaurants' do
   end
 
   context 'viewing restaurants' do
-
     scenario 'lets a user view a restaurant' do
       restaurant = @user.restaurants.create name: 'KFC'
       visit '/restaurants'
@@ -52,7 +50,6 @@ feature 'restaurants' do
 
 
   context 'editing restaurants' do
-
     scenario 'let a user edit a restaurant' do
       @user.restaurants.create name: 'KFC'
       visit '/restaurants'
@@ -73,8 +70,6 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-
-
     scenario 'removes a restaurant when a user clicks a delete link' do
       @user.restaurants.create name: 'KFC'
       visit '/restaurants'
@@ -89,42 +84,30 @@ feature 'restaurants' do
       click_link 'Sign out'
       sign_in(@user2)
       expect(page).not_to have_link 'Delete KFC'
-      # click_link 'Delete KFC'
-      # expect(page).to have_content 'You can only delete your own restaurants'
     end
   end
 
-  context 'creating restaurants' do
 
-    context 'an invalid restaurant' do
-        it 'does not let you submit a name that is too short' do
-          visit '/restaurants'
-          click_link 'Add a restaurant'
-          fill_in 'Name', with: 'kf'
-          click_button 'Create Restaurant'
-          expect(page).not_to have_css 'h2', text: 'kf'
-          expect(page).to have_content 'error'
-        end
+  context 'creating restaurant names that are valid' do
+    scenario 'it does not let you submit a name that is too short' do
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'kf'
+      click_button 'Create Restaurant'
+      expect(page).not_to have_css 'h2', text: 'kf'
+      expect(page).to have_content 'error'
     end
+  end
 
-    context 'user not signed in' do
-
-      scenario 'user must be signed in to create a restaurant' do
-
-        visit '/restaurants'
-        click_link 'Sign out'
-        click_link 'Add a restaurant'
-        expect(page).to have_content 'You need to sign in or sign up before continuing.'
-        expect(current_path).to eq '/users/sign_in'
-      end
+  context 'user not signed in' do
+    scenario 'user must be signed in to create a restaurant' do
+      visit '/restaurants'
+      click_link 'Sign out'
+      click_link 'Add a restaurant'
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
+      expect(current_path).to eq '/users/sign_in'
     end
-
-    # before {Restaurant.create name: 'KFC'} # need a way of associating this creat with a user
-    # scenario 'user tries to edit a restaurant that they did not add' do
-    #   visit '/restaurants'
-    #
-    # end
   end
 
 
-end
+  end
