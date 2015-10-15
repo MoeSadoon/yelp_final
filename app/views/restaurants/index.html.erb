@@ -24,7 +24,7 @@
             <% if current_user && restaurant.user_id == current_user.id %>
             <%= link_to "Delete this review", restaurant_review_path(restaurant, review), method: :delete %>
             <% end %>
-
+            <h4>Average rating: <%= restaurant.average_rating.to_i %></h4>
           </li>
         <% end %>
       </ul>
