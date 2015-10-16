@@ -5,11 +5,11 @@
 <body>
 <% if (current_user != nil) %>
 Welcome <%=current_user.email %>
-user_id <%=current_user.id %>
 <% end %>
 
 <% if @restaurants.any? %>
   <% @restaurants.each do |restaurant| %>
+    <%= image_tag restaurant.image.url(:thumb) %>
     <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
 
     <% if current_user && restaurant.user_id == current_user.id %>
