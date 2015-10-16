@@ -35,7 +35,9 @@ user_id <%=current_user.id %>
             <%= link_to "Delete this review", review_path(review), method: :delete %>
             <% end %>
             <h4>Average rating: <%= star_rating(restaurant.average_rating) %></h4>
-            <p><%= pluralize review.endorsements.count, 'endorsement' %></p>
+            <%= link_to "Endorse", review_endorsements_path(review), class: 'endorsements-link' %>
+            <span class="endorsements_count"> <%= review.endorsements.count %> </span>
+            <%= 'endorsement'.pluralize(review.endorsements.count) %>
           </li>
         <% end %>
       </ul>
