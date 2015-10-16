@@ -1,3 +1,9 @@
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+
 <% if @restaurants.any? %>
   <% @restaurants.each do |restaurant| %>
     <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
@@ -24,7 +30,7 @@
             <% if current_user && restaurant.user_id == current_user.id %>
             <%= link_to "Delete this review", restaurant_review_path(restaurant, review), method: :delete %>
             <% end %>
-            <h4>Average rating: <%= restaurant.average_rating.to_i %></h4>
+            <h4>Average rating: <%= star_rating(restaurant.average_rating) %></h4>
           </li>
         <% end %>
       </ul>
@@ -37,3 +43,5 @@
 <% end %>
 
 <a href='/restaurants/new'>Add a restaurant</a>
+
+</body>

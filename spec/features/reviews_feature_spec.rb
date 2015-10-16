@@ -54,8 +54,16 @@ feature 'review' do
       click_link 'Sign out'
       sign_in(@user2)
       leave_review('Great', '5')
-      expect(page).to have_content('Average rating: 4')
+      expect(page).to have_content('Average rating: ★★★★☆')
     end
   end
+
+    scenario 'displays an average rating for all reviews' do
+      leave_review('so so', '3')
+      click_link 'Sign out'
+      sign_in(@user2)
+      leave_review('Great!', '5')
+      expect(page).to have_content('Average rating: ★★★★☆')
+    end
 
 end
