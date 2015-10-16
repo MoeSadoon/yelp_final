@@ -3,6 +3,10 @@
 </head>
 
 <body>
+<% if (current_user != nil) %>
+Welcome <%=current_user.email %>
+user_id <%=current_user.id %>
+<% end %>
 
 <% if @restaurants.any? %>
   <% @restaurants.each do |restaurant| %>
@@ -27,10 +31,14 @@
         <% restaurant.reviews.each do |review| %>
           <li>
             <%= review.thoughts %>, <strong><%= review.rating %></strong>/5
-            <% if current_user && restaurant.user_id == current_user.id %>
-            <%= link_to "Delete this review", restaurant_review_path(restaurant, review), method: :delete %>
+            <% if current_user && review.user_id == current_user.id %>
+            review user id:<%= review.user_id %>
+            review id: <%= review.id %>
+
+            <%= link_to "Delete this review", review_path(review), method: :delete %>
             <% end %>
             <h4>Average rating: <%= star_rating(restaurant.average_rating) %></h4>
+            <p><%= pluralize review.endorsements.count, 'endorsement' %></p>
           </li>
         <% end %>
       </ul>
